@@ -1,129 +1,48 @@
-name: .NET
-
+name: Build and deploy .NET Core application to Web App tdd-web-app
 on:
-  workflow_dispatch:
-    inputs:
-      reason:
-        description: 'The reason for running the workflow'
-        required: true
-        default: 'Manual build from GitHub UI'
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+    branches:
+    - main
 env:
-  app-name: "cd-simplefeedreader"
-  rg-name: "cd-dotnetactions"
-
+  AZURE_WEBAPP_NAME: tdd-web-app
+  AZURE_WEBAPP_PACKAGE_PATH: TddWebApp\publish
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+  WORKING_DIRECTORY: TddWebApp
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
-    - name: 'Print manual run reason'
-      if: ${{ github.event_name == 'workflow_dispatch' }}
-      run: |
-        echo 'Reason: ${{ github.event.inputs.reason }}'
-    - name: Setup .NET
+    - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
     - name: Publish
-      run: dotnet publish TddWebApp/TddWebApp.csproj -c Release -o website
-    - name: Upload a Build Artifact
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Publish Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: website
-        path: tdd_api_rest/website/**
-        if-no-files-found: error
-  
-  deploy_staging:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+  deploy:
+    runs-on: windows-latest
     needs: build
-    runs-on: ubuntu-latest
-
-    environment:
-      name: STAGING
-      url: ${{ steps.deploywebapp.outputs.webapp-url }}
-
     steps:
-    - name: Download a Build Artifact
+    - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
-        name: website
-        path: website
-
-    - name: Login via Azure CLI
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Deploy web app
-      id: deploywebapp
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.app-name }}
-        slot-name: staging
-        package: website
-
-    - name: Update config
-      uses: Azure/appservice-settings@v1
-      with:
-       app-name: ${{ env.app-name }}
-       slot-name: staging
-       app-settings-json: |
-         [
-             {
-                 "name": "UI:Index:Header",
-                 "value": "${{ secrets.INDEX_HEADER }}",
-                 "slotSetting": true
-             }
-         ]
-
-    - name: az cli logout
-      run: az logout
-
-  deploy_prod:
-    needs: deploy_staging
-    runs-on: ubuntu-latest
-
-    environment:
-      name: PROD
-      url: ${{ steps.slot_swap.outputs.url }}
-
-    steps:
-    - name: Login via Azure CLI
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Swap staging slot into production
-      id: slot_swap
-      run: |
-        az webapp deployment slot swap -g ${{ env.rg-name }} -n ${{ env.app-name }} -s staging
-        url=$(az webapp show -g ${{ env.rg-name }} -n ${{ env.app-name }} --query "defaultHostName" -o tsv)
-        echo "::set-output name=url::http://$url"
-
-    - name: Update config
-      uses: Azure/appservice-settings@v1
-      with:
-       app-name: ${{ env.app-name }}
-       app-settings-json: |
-         [
-             {
-                 "name": "UI:Index:Header",
-                 "value": "${{ secrets.INDEX_HEADER }}",
-                 "slotSetting": true
-             }
-         ]
-
-    - name: az cli logout
-      run: az logout
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.tdd_web_app_79D4 }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
