@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core application to Web App tdd-web-app ${{ github.base.ref }} ${{ GITHUB_BASE_REF }}
+name: Build and deploy .NET Core application to Web App tdd-web-app ${{ GITHUB_BASE_REF }}
 on:
   push:
     branches:
