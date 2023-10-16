@@ -35,6 +35,11 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
+    - name: Login via Az module
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+        enable-AzPSSession: true 
     - name: Download artifact from build job
       uses: actions/download-artifact@v3
       with:
