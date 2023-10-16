@@ -1,11 +1,11 @@
-name: Build and deploy .NET Core application to Web App tdd-web-app
+name: Build and deploy .NET Core application to Web App tdd-web-app ${{ github.base.ref }} ${{ GITHUB_BASE_REF }}
 on:
   push:
     branches:
     - main
     - 'releases/**'
 env:
-  AZURE_WEBAPP_NAME: tdd-web-app-${GITHUB_REF##*/}
+  AZURE_WEBAPP_NAME: tdd-web-app-${{ GITHUB_BASE_REF }}
   AZURE_WEBAPP_PACKAGE_PATH: TddWebApp\publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
