@@ -5,7 +5,7 @@ on:
     - main
     - 'releases/**'
 env:
-  AZURE_WEBAPP_NAME: tdd-web-app
+  AZURE_WEBAPP_NAME: tdd-web-app-${GITHUB_REF##*/}
   AZURE_WEBAPP_PACKAGE_PATH: TddWebApp\publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
