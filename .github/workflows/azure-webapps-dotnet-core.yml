@@ -43,7 +43,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: website
-        path: TddWebApp/website/**
+        path: tdd_api_rest/website/**
         if-no-files-found: error
   
   deploy_staging:
