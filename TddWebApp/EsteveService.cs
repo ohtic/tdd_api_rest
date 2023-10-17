@@ -26,8 +26,12 @@ namespace TddApp
             {
                 if (c > 9999)
                     throw new Exception("El valor solo puede ser un int de máximo 4 cifras.");
-                if(c == 666)
+                if (c == 666)
                     throw new Exception("El número 666 no es valido revise su ouija de confianza para más información.");
+                else if (c == 10 || c == 13)
+                    throw new Exception("Los números 13 y 10 causan un error por mala suerte.");
+                else if(c < 1)
+                    throw new Exception($"El número {c} es inválido los números deben ser mayor o iguales a 1.");
             });
 
             if (list.Distinct().Count() < 4)
