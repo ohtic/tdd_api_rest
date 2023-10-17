@@ -72,5 +72,20 @@ namespace TddWebAppTest
             Assert.Equal(555, ex.Code);
             Assert.Equal("Los números 13 y 10 causan un error por mala suerte", ex.Message);
         }
+
+        [Fact]
+        public void Numeros_menores_a_1_no_validos_Exception()
+        {
+            //Arrance
+            var logicService = new CiroService();
+
+            //Act
+            var ex = Assert.Throws<LogicValidationException>(() => logicService.MySuperLogic(-1, 24, 332, 5012));
+
+            //Assert
+            Assert.Equal(400, ex.Code);
+            Assert.Equal("El número -1 es inválido los números deben ser mayor o iguales a 1", ex.Message);
+        }
+
     }
 }
