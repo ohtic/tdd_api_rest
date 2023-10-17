@@ -44,5 +44,19 @@ namespace TddWebAppTest
             Assert.Equal(418, ex.Code);
             Assert.Equal("Los números no pueden estar duplicados", ex.Message);
         }
+
+        [Fact]
+        public void Numero_666_no_valido_Exception()
+        {
+            //Arrance
+            var logicService = new CiroService();
+
+            //Act
+            var ex = Assert.Throws<LogicValidationException>(() => logicService.MySuperLogic(1, 24, 666, 5012));
+
+            //Assert
+            Assert.Equal(450, ex.Code);
+            Assert.Equal("El número 666 no es valido revise su ouija de confianza para más información", ex.Message);
+        }
     }
 }
