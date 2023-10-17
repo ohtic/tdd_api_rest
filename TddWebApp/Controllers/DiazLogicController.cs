@@ -1,21 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using TddApp;
+using TddWebApp.Models;
 
 namespace TddWebApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
+    //MODO NORMAAL
     public class DiazLogicController : ControllerBase
     {
+        private readonly IDiazService _diazService;
 
-        public DiazLogicController(){}
+        public DiazLogicController(IDiazService diazService)
+        {
+            _diazService = diazService;
+        }
 
         [HttpGet(Name = "DiazLogicController")]
-        public int Get(int a,int b, int c, int d)
+        public ResponseModel Get(int a,int b, int c, int d)
         {
-            //var logicService = new LogicService();
-            //return logicService.MySuperLogic(a,b,c,d);
-            return 1;
+            return _diazService.MySuperLogic(a,b,c,d);
         }
     }
 }

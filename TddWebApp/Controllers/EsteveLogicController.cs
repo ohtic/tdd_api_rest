@@ -13,9 +13,8 @@ namespace TddWebApp.Controllers
         [HttpGet(Name = "EsteveLogicController")]
         public int Get(int a,int b, int c, int d)
         {
-            //var logicService = new LogicService();
-            //return logicService.MySuperLogic(a,b,c,d);
-            return 1;
+            var logicService = new EsteveService();
+            return logicService.MySuperLogic(a,b,c,d);
         }
     }
 }

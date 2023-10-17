@@ -10,7 +10,7 @@ namespace TddWebAppTest
         public void Get()
         {
             // Arrange
-            LogicService logicService = new LogicService();
+            LiceaService logicService = new LiceaService();
 
             // Act
             
