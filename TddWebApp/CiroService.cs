@@ -15,6 +15,8 @@
         private void ValidateValues(List<int> array)
         {
             if (array.Exists(x => x.ToString().Length > 4)) throw new LogicValidationException(410, "El valor solo puede ser un int de máximo 4 cifras");
+
+            if (array.Exists(x => x == 666)) throw new LogicValidationException(450, "El número 666 no es valido revise su ouija de confianza para más información");
         }
 
         private void ValidateArray(List<int> array)
