@@ -100,5 +100,19 @@ namespace TddWebAppTest
             Assert.Equal(432, ex.Code);
             Assert.Equal("Cada número debe tener una cantidad diferente de cifras", ex.Message);
         }
+
+        [Fact]
+        public void Resultado_debe_ser_diferente_a_los_numeros_Exception()
+        {
+            //Arrance
+            var logicService = new CiroService();
+
+            //Act
+            var ex = Assert.Throws<LogicValidationException>(() => logicService.MySuperLogic(1, 24, 332, 5012));
+
+            //Assert
+            Assert.Equal(411, ex.Code);
+            Assert.Equal("El resultado de la operación final debe ser diferente a los cuatro números introducidos", ex.Message);
+        }
     }
 }
