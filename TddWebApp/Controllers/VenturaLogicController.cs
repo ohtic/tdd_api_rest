@@ -4,18 +4,28 @@ using TddApp;
 namespace TddWebApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[API]")]
     public class VenturaLogicController : ControllerBase
     {
 
+        private int _result;
+
         public VenturaLogicController(){}
 
-        [HttpGet(Name = "VenturaLogicController")]
-        public int Get(int a,int b, int c, int d)
+        [HttpGet("{num1}/{num2}/{num3}/{num4}")]
+        public IActionResult Get(int num1,int num2, int num3 int num4)
         {
-            //var logicService = new LogicService();
-            //return logicService.MySuperLogic(a,b,c,d);
-            return 1;
+            try
+            {
+                var venturaService = new VenturaService();
+                int result = venturaService.MySuperLogic(a, b, c, d);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }
