@@ -18,5 +18,18 @@ namespace TddWebAppTest
             // Assert
             Assert.Equal(4, res);
         }
+
+
+        [Fact]
+        public void Get_InvalidNumbers_ReturnException()
+        {
+            // Arrange
+            EsteveService logicService = new EsteveService();
+
+            // Act
+            // Assert
+            Exception exception = Assert.Throws<Exception>(() => logicService.MySuperLogic(12000, 2, 3, 4));
+            Assert.Equal("El valor solo puede ser un int de máximo 4 cifras.", exception.Message);
+        }
     }
 }
