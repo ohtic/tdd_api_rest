@@ -40,8 +40,8 @@ namespace TddWebAppTest
 
             // Act
             // Assert
-            Exception exception = Assert.Throws<Exception>(() => logicService.MySuperLogic(2, 2, 3, 4));
-            Assert.Equal("Los números no pueden estar duplicados.", exception.Message);
+            Exception exception = Assert.Throws<Exception>(() => logicService.MySuperLogic(666, 2, 3, 4));
+            Assert.Equal("El número 666 no es valido revise su ouija de confianza para más información.", exception.Message);
         }
     }
 }
