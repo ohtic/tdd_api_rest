@@ -36,6 +36,17 @@ namespace TddApp
 
             if (list.Distinct().Count() < 4)
                 throw new Exception("Los números no pueden estar duplicados.");
+
+            var digitCount = new int[4] { 0, 0, 0, 0 };
+            list.ForEach(c =>
+            {
+                digitCount[c.ToString().Length - 1]++;
+            });
+
+            if(!(digitCount.Distinct().Count() == 1 && digitCount[0] == 1))
+                throw new Exception("Cada número debe tener un número diferente de cifras.");
+
+
         }
     }
 }
