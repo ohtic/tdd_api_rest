@@ -87,5 +87,18 @@ namespace TddWebAppTest
             Assert.Equal("El número -1 es inválido los números deben ser mayor o iguales a 1", ex.Message);
         }
 
+        [Fact]
+        public void Numero_debe_tener_cantidad_diferente_de_cifras_Exception()
+        {
+            //Arrance
+            var logicService = new CiroService();
+
+            //Act
+            var ex = Assert.Throws<LogicValidationException>(() => logicService.MySuperLogic(11, 24, 33, 50));
+
+            //Assert
+            Assert.Equal(432, ex.Code);
+            Assert.Equal("Cada número debe tener una cantidad diferente de cifras", ex.Message);
+        }
     }
 }
