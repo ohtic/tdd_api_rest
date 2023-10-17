@@ -58,5 +58,19 @@ namespace TddWebAppTest
             Assert.Equal(450, ex.Code);
             Assert.Equal("El número 666 no es valido revise su ouija de confianza para más información", ex.Message);
         }
+
+        [Fact]
+        public void Numeros_13_y_10_no_validos_Exception()
+        {
+            //Arrance
+            var logicService = new CiroService();
+
+            //Act
+            var ex = Assert.Throws<LogicValidationException>(() => logicService.MySuperLogic(4, 13, 332, 5012));
+
+            //Assert
+            Assert.Equal(555, ex.Code);
+            Assert.Equal("Los números 13 y 10 causan un error por mala suerte", ex.Message);
+        }
     }
 }
