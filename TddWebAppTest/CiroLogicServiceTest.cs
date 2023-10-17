@@ -1,22 +1,20 @@
-using System.Net;
 using TddApp;
-using TddWebApp;
 
 namespace TddWebAppTest
 {
     public class CiroLogicServiceTest
     {
         [Fact]
-        public void Get()
+        public void MySuperLogic()
         {
-            // Arrange
-            LogicService logicService = new LogicService();
+            //Arrance
+            var logicService = new CiroService();
 
-            // Act
-            
+            //Act
+            var result = logicService.MySuperLogic(4, 24, 332, 5012);
 
-            // Assert
-            //Assert.Equal(999, res);
+            //Assert
+            Assert.Equal(5009, result);
         }
     }
 }

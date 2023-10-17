@@ -1,19 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
-using System.Collections.Generic;
-using TddWebApp;
-
-namespace TddApp
+﻿namespace TddApp
 {
-    public class CiroService { 
-    //public int MySuperLogic(int a, int b, int c, int d)
-    //{
-    //    var sourceArray = new List<int>() { a, b, c, d };
-    //    ValidateValues(sourceArray);
-    //    ValidateArray(sourceArray);
-    //    var res = sourceArray.Max() - sourceArray.Min() + 1;
-    //    ValidateResult(a,b,c,d,res);
-    //    return res;
-    //}
-
-}
+    public class CiroService
+    {
+        public int MySuperLogic(int a, int b, int c, int d)
+        {
+            return 0;
+        }
+    }
 }
