@@ -4,7 +4,10 @@
     {
         public int MySuperLogic(int a, int b, int c, int d)
         {
-            return 0;
+            var sourceArray = new List<int>() { a, b, c, d }; ;
+            var res = sourceArray.Max() - sourceArray.Min() + 1;
+
+            return res;
         }
     }
 }
