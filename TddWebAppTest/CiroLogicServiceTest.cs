@@ -24,9 +24,10 @@ namespace TddWebAppTest
             var logicService = new CiroService();
 
             //Act
-            var ex = Assert.Throws<Exception>(() => logicService.MySuperLogic(1, 24, 332, 50112));
+            var ex = Assert.Throws<LogicValidationException>(() => logicService.MySuperLogic(1, 24, 332, 50112));
 
             //Assert
+            Assert.Equal(410, ex.Code);
             Assert.Equal("El valor solo puede ser un int de máximo 4 cifras", ex.Message);
         }
     }
