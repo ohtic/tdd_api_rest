@@ -20,6 +20,8 @@
 
             var toExclude = new List<int>() { 13, 10 };
             if (array.Where(x => toExclude.Contains(x)).Any()) throw new LogicValidationException(555, "Los números 13 y 10 causan un error por mala suerte");
+
+            foreach (int item in array) if (item < 1) throw new LogicValidationException(400, $"El número {item} es inválido los números deben ser mayor o iguales a 1");
         }
 
         private void ValidateArray(List<int> array)
