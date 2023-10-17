@@ -1,4 +1,6 @@
-﻿namespace TddApp
+﻿using System.Collections.Generic;
+
+namespace TddApp
 {
     public class CiroService
     {
@@ -27,6 +29,14 @@
         private void ValidateArray(List<int> array)
         {
             if (array.GroupBy(x => x).Any(g => g.Count() > 1)) throw new LogicValidationException(418, "Los números no pueden estar duplicados");
+
+            var list = new List<int>();
+            foreach (int item in array)
+            {
+                var sourceLenght = item.ToString().Length;
+                if (!list.Contains(sourceLenght)) list.Add(sourceLenght);
+            }
+            if (list.Count != array.Count) throw new LogicValidationException(432, "Cada número debe tener una cantidad diferente de cifras");
         }
     }
 
