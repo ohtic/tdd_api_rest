@@ -23,6 +23,9 @@ namespace TddApp
                 if (c > 9999)
                     throw new Exception("El valor solo puede ser un int de máximo 4 cifras.");
             });
+
+            if (list.Distinct().Count() < 4)
+                throw new Exception("Los números no pueden estar duplicados.");
         }
     }
 }
