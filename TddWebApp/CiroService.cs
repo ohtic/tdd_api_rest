@@ -10,6 +10,7 @@ namespace TddApp
             ValidateValues(sourceArray);
             ValidateArray(sourceArray);
             var res = sourceArray.Max() - sourceArray.Min() + 1;
+            ValidateResult(sourceArray, res);
 
             return res;
         }
@@ -37,6 +38,11 @@ namespace TddApp
                 if (!list.Contains(sourceLenght)) list.Add(sourceLenght);
             }
             if (list.Count != array.Count) throw new LogicValidationException(432, "Cada número debe tener una cantidad diferente de cifras");
+        }
+
+        private void ValidateResult(List<int> array, int result)
+        {
+            foreach (int item in array) if (item == result) throw new LogicValidationException(411, "El resultado de la operación final debe ser diferente a los cuatro números introducidos");
         }
     }
 
