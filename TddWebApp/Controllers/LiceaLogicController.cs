@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TddApp;
+using TddWebApp.Models;
 
 namespace TddWebApp.Controllers
 {
@@ -7,15 +8,19 @@ namespace TddWebApp.Controllers
     [Route("[controller]")]
     public class LiceaLogicController : ControllerBase
     {
-
         public LiceaLogicController(){}
 
         [HttpGet(Name = "LiceaLogicController")]
-        public int Get(int a,int b, int c, int d)
+        public IActionResult Get(int a, int b, int c, int d)
         {
             var logicService = new LiceaService();
-            return logicService.MySuperLogic(a, b, c, d);
-            return 1;
+            var result=  logicService.MySuperLogic(a, b, c, d);
+            var response = new JsonResponseDto
+            {
+                message="",
+                data=result
+            };
+            return Ok(response);
         }
     }
 }

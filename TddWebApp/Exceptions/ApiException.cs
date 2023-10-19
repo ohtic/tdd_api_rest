@@ -1,10 +1,15 @@
 ﻿using System.Net;
+using System.Net.Mail;
 
 namespace TddWebApp.Exceptions
 {
-    public class ApiException:Exception
+    public class ApiException : Exception
     {
-        public ApiException(string message,HttpStatusCode httpStatus):base(message) { }
-        
+        public int HttpStatus { get; }
+
+        public ApiException(int httpStatus, string message) : base(message)
+        {
+            HttpStatus = httpStatus;
+        }
     }
 }
